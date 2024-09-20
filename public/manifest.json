@@ -1,0 +1,41 @@
+{
+    "short_name": "Notes",
+    "name": "Notes",
+    "description": "Keep your notes on your device and sync them with your WebDAV server.",
+    "background_color": "#b02f00",
+    "theme_color": "#b02f00",
+    "start_url": "/?source=pwa",
+    "id": "/?source=pwa",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/images/icon-vector.svg",
+            "type": "image/svg+xml",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/images/icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/images/icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/images/screenshot_narrow.png",
+            "type": "image/png",
+            "sizes": "540x720",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "/images/screenshot_wide.png",
+            "type": "image/png",
+            "sizes": "720x540",
+            "form_factor": "wide"
+        }
+    ]
+}
