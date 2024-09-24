@@ -1,14 +1,21 @@
 {
-    "compilerOptions": {
-        "target": "es2019",
-        "module": "es2022",
-        "moduleResolution": "node",
-        "lib": ["es2019", "dom"],
-        "declaration": true,
-        "sourceMap": true,
-        "experimentalDecorators": true,
-        "outDir": "dist",
-        "noImplicitOverride": true
-    },
-    "include": ["src/**/*.ts"]
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "es2022",
+    "moduleResolution": "node",
+    "lib": [
+      "es2019",
+      "dom",
+      "webWorker"
+    ],
+    "skipLibCheck": true,
+    "declaration": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "outDir": "dist",
+    "noImplicitOverride": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
 }

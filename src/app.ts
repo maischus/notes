@@ -1,20 +1,22 @@
+import { LitElement, css, html } from "lit";
+import { customElement } from "lit/decorators.js";
+import { provide } from "@lit/context";
 import { Router } from "@lit-labs/router";
+
 import "@material/web/icon/icon.js";
 import "@material/web/iconbutton/icon-button.js";
 import '@material/web/labs/navigationbar/navigation-bar.js';
 import "@material/web/labs/navigationdrawer/navigation-drawer-modal.js";
 import '@material/web/labs/navigationtab/navigation-tab.js';
-import { LitElement, css, html } from "lit";
-import { customElement } from "lit/decorators.js";
+
 import { Provider } from "./mixins/dependency-injection";
 import "./ui/notes/note-edit-view";
 import "./ui/notes/note-list";
 import "./ui/notes/note-view";
 import "./ui/notes/tag-list";
-import { NotesCollection } from "./core/notes-collection";
 import { AppRoute, routeConfig } from "./app-routing";
-import { provide } from "@lit/context";
-import { notesContext } from "./core/notes-context";
+import { NotesCollection, notesContext } from "./core/notes-context";
+import { WebDavSync, webdavSyncContext } from "./core/webdav-sync/webdav-sync-context";
 
 // @ts-ignore: Property 'UrlPattern' does not exist
 if (!globalThis.URLPattern) {
@@ -47,6 +49,9 @@ export class NotesApp extends Provider(LitElement) {
 
   @provide({ context: notesContext })
   notes = new NotesCollection();
+
+  @provide({ context: webdavSyncContext })
+  webdavSync = new WebDavSync();
 
   private _router = new Router(this, routeConfig);
 

@@ -2,18 +2,23 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#b02f00" />
-    <script type="module" src="/src/app.ts"></script>
-    <link rel="apple-touch-icon" href="icon.png" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="stylesheet" href="./src/index.css" />
-    <title>Notes</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#b02f00" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="./src/index.css" />
+  <title>Notes</title>
 </head>
 
 <body>
-    <notes-app></notes-app>
+  <notes-app></notes-app>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/src/serviceworker.ts")
+    }
+  </script>
+  <script type="module" src="/src/app.ts"></script>
 </body>
 
 </html>

@@ -1,14 +1,18 @@
+import { LitElement, css, html } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { consume } from "@lit/context";
+
 import "@material/web/fab/fab.js";
 import "@material/web/icon/icon.js";
 import "@material/web/list/list-item.js";
 import "@material/web/list/list.js";
-import { LitElement, css, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
+
 import { Note } from "../../core/note";
 import { NotesCollection } from "../../core/notes-collection";
 import { Requestor } from "../../mixins/dependency-injection";
 import { AppRoute } from "../../app-routing";
-import { syncNotes } from "../../sync";
+import { webdavSyncContext, WebDavSync } from "../../core/webdav-sync/webdav-sync-context";
+
 
 @customElement("note-note-list")
 export class NoteList extends Requestor(LitElement) {
@@ -23,6 +27,9 @@ export class NoteList extends Requestor(LitElement) {
       right: 30px;
     }
   `;
+
+  @consume({ context: webdavSyncContext })
+  private webdavSync: WebDavSync;
 
   _notes: NotesCollection;
 
@@ -59,7 +66,7 @@ export class NoteList extends Requestor(LitElement) {
     <div class="fab-container">
       <md-fab @click="${this._showNewNoteForm
       }"><md-icon slot="icon">add</md-icon></md-fab>
-      <md-fab @click="${async () => await syncNotes(this._notes)
+      <md-fab @click="${async () => await this.webdavSync.syncNotes(this._notes)
       }"><md-icon slot="icon">sync</md-icon></md-fab>
     </div>
       `;
