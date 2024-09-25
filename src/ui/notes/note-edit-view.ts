@@ -1,13 +1,15 @@
+import { LitElement, css, html } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
+
 import "@material/web/button/filled-button.js";
 import "@material/web/button/outlined-button.js";
 import "@material/web/chips/chip-set.js";
 import "@material/web/chips/filter-chip.js";
-import { MdFilterChip } from "@material/web/chips/filter-chip.js";
 import "@material/web/select/outlined-select.js";
 import "@material/web/textfield/outlined-text-field.js";
+import { MdFilterChip } from "@material/web/chips/filter-chip.js";
 import { MdOutlinedTextField } from "@material/web/textfield/outlined-text-field.js";
-import { LitElement, css, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+
 import { Note } from "../../core/note";
 import { NotesCollection } from "../../core/notes-collection";
 import { Requestor } from "../../mixins/dependency-injection";

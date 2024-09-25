@@ -1,18 +1,20 @@
+import { LitElement, css, html } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { consume } from "@lit/context";
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+
 import "@material/web/chips/assist-chip.js";
 import "@material/web/chips/chip-set.js";
 import "@material/web/iconbutton/icon-button.js";
 import "@material/web/menu/menu-item.js";
 import "@material/web/menu/menu.js";
-import { LitElement, css, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { NotesCollection } from "../../core/notes-collection";
-import { Requestor } from "../../mixins/dependency-injection";
-import { marked } from 'marked';
-import * as DOMPurify from 'dompurify';
+
 import { AppRoute } from "../../app-routing";
+import { NotesCollection, notesContext } from "../../core/notes-context";
 
 @customElement("note-view")
-export class NoteView extends Requestor(LitElement) {
+export class NoteView extends LitElement {
   static override styles = css`
     h2 {
       display: flex;
@@ -20,16 +22,11 @@ export class NoteView extends Requestor(LitElement) {
     }
   `;
 
+  @consume({ context: notesContext })
+  private _notes: NotesCollection;
+
   @property()
   note: string = "";
-
-  _notes: NotesCollection;
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this._notes = this.requestInstance("notes");
-
-  }
 
   override render() {
     const note = this._notes.getNote(this.note);
@@ -38,8 +35,7 @@ export class NoteView extends Requestor(LitElement) {
     }
 
     const parser = new DOMParser();
-    //const content = parser.parseFromString(DOMPurify.sanitize(marked.parse(note.content)), 'text/html');
-    const content = parser.parseFromString((marked.parse(note.content)), 'text/html');
+    const content = parser.parseFromString(DOMPurify.sanitize(marked.parse(note.content) as string), 'text/html');
 
     return html`
       <h2>
@@ -86,4 +82,3 @@ declare global {
     "note-view": NoteView;
   }
 }
-

@@ -105,20 +105,16 @@ class NotesCollection {
     return this.notes.find((note) => note.id === id);
   }
 
-  public getNotes(): Note[] {
+  public getNotesSortedByTitle(): Note[] {
     return this.notes.sort((a, b) => {
       const noteATitle = a.title.toUpperCase(); // ignore upper and lowercase
       const noteBTitle = b.title.toUpperCase(); // ignore upper and lowercase
-      if (noteATitle < noteBTitle) {
-        return -1;
-      }
-
-      if (noteATitle > noteBTitle) {
-        return 1;
-      }
-
-      return 0;
+      return noteATitle.localeCompare(noteBTitle);
     });
+  }
+
+  public getNotesSortedByDate(): Note[] {
+    return this.notes.sort((a, b) => b.lastMod - a.lastMod);
   }
 
   public getNotesByTag(tagId: string): Note[] {

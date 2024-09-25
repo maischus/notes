@@ -1,9 +1,3 @@
-## Routing
+# Notes
 
-1. Fire semantic event from navigation component
-2. Handle semantic event, update route
-3. Handle route change
-4. Update data in route change handler
-
-## Alternatives
-https://www.usememos.com/
+`Notes` is a progressive web application (PWA) to manage your notes. Notes can be written in plain-text or in Markdown and can be synchronized with a WebDAV server.

@@ -9,6 +9,7 @@ self.addEventListener("activated", event => {
 const cacheName = "NotesAppCache_v1";
 
 self.addEventListener("fetch", (event: FetchEvent) => {
+  console.log(event);
   // Check if this is a navigation request
   if (event.request.mode === 'navigate') {
     // Open the cache

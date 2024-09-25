@@ -21,10 +21,16 @@ export class NoteList extends Requestor(LitElement) {
       display: block;
     }
 
-    .fab-container {
+    .fabs {
+      --_viewport-margin: 2.5vmin;
       position: fixed;
-      bottom: 90px;
-      right: 30px;
+      display: flex;
+      z-index: 1;
+      flex-direction: column-reverse;
+      place-items: center;
+      gap: var(--_viewport-margin);
+      inset-block: auto var(--_viewport-margin);
+      inset-inline: auto var(--_viewport-margin);
     }
   `;
 
@@ -47,7 +53,7 @@ export class NoteList extends Requestor(LitElement) {
     let notes: Note[] = [];
     if (this.tag === "") {
       displayTag = "All";
-      notes = this._notes.getNotes();
+      notes = this._notes.getNotesSortedByDate();
     } else if (this.tag === "untagged") {
       displayTag = "Untagged";
       notes = this._notes.getUntaggedNotes();
@@ -60,16 +66,40 @@ export class NoteList extends Requestor(LitElement) {
     <h2>${displayTag}</h2>
     <md-list>
       ${notes.map(
-      (note) => html`<md-list-item href="${AppRoute.NoteWithId(note.id)}">${note.title}</md-list-item>`
+      (note) => html`<md-list-item href="${AppRoute.NoteWithId(note.id)}"><div slot="headline">${note.title}</div><div slot="supporting-text">${this._formatDate(note.lastMod)}</div></md-list-item>`
     )}
     </md-list>
-    <div class="fab-container">
-      <md-fab @click="${this._showNewNoteForm
-      }"><md-icon slot="icon">add</md-icon></md-fab>
-      <md-fab @click="${async () => await this.webdavSync.syncNotes(this._notes)
-      }"><md-icon slot="icon">sync</md-icon></md-fab>
+    <div class="fabs" role="group" aria-label="Floating action buttons">
+      <md-fab class="fab" aria-label="Add new note" @click="${this._showNewNoteForm
+      }"><md-icon aria-hidden="true" slot="icon">add</md-icon></md-fab>
+      <md-fab class="fab" aria-label="Synchronize notes" @click="${async () => await this.webdavSync.syncNotes(this._notes)
+      }"><md-icon aria-hidden="true" slot="icon">sync</md-icon></md-fab>
     </div>
       `;
+  }
+
+  private _formatDate(date: number) {
+    const rtf = new Intl.RelativeTimeFormat(navigator.language, { numeric: "auto" });
+    const second = 1000;
+    const minute = 60 * second;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+    const week = 7 * day;
+
+    const elapsedTime = Date.now() - date;
+
+
+    if (elapsedTime < minute) {
+      return rtf.format(-Math.round(elapsedTime / second), "seconds");
+    } else if (elapsedTime < hour) {
+      return rtf.format(-Math.round(elapsedTime / minute), "minute");
+    } else if (elapsedTime < day) {
+      return rtf.format(-Math.round(elapsedTime / hour), "hour");
+    } else if (elapsedTime < week) {
+      return rtf.format(-Math.round(elapsedTime / day), "day");
+    } else {
+      return new Intl.DateTimeFormat(navigator.language).format(date);
+    }
   }
 
   private _showNewNoteForm() {
