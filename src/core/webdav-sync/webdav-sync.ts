@@ -51,7 +51,7 @@ export class WebDavSync {
     const lastSync = new Date(parseInt(localStorage.getItem(this._storageKeyLastSyncDate)));
 
     let currentLocalIndex = 0;
-    const localNotes = Array.from(notesCollection.getNotesSortedByDate()).sort((a: Note, b: Note) => a.id.localeCompare(b.id));
+    const localNotes = Array.from(notesCollection.getNotes()).sort((a: Note, b: Note) => a.id.localeCompare(b.id));
 
     let currentRemoteIndex = 0;
     const remoteNotes = (await this._client.getDirectoryContents("/") as FileStat[]).sort((a: FileStat, b: FileStat) => a.basename.localeCompare(b.basename));

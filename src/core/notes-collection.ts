@@ -105,24 +105,28 @@ class NotesCollection {
     return this.notes.find((note) => note.id === id);
   }
 
-  public getNotesSortedByTitle(): Note[] {
-    return this.notes.sort((a, b) => {
-      const noteATitle = a.title.toUpperCase(); // ignore upper and lowercase
-      const noteBTitle = b.title.toUpperCase(); // ignore upper and lowercase
-      return noteATitle.localeCompare(noteBTitle);
-    });
-  }
+  public getNotes(sortBy: "title" | "date" | "" = "", tag: null | string = null) {
+    let notes = Array.from(this.notes);
+    // tag
+    if (tag !== null) {
+      if (tag === "") {
+        notes = notes.filter((note) => note.tags.length == 0);
+      } else {
+        notes = notes.filter((note) => note.tags.includes(tag));
+      }
+    }
 
-  public getNotesSortedByDate(): Note[] {
-    return this.notes.sort((a, b) => b.lastMod - a.lastMod);
-  }
-
-  public getNotesByTag(tagId: string): Note[] {
-    return this.notes.filter((note) => note.tags.includes(tagId));
-  }
-
-  public getUntaggedNotes(): Note[] {
-    return this.notes.filter((note) => note.tags.length == 0);
+    if (sortBy === "date") {
+      return notes.sort((a, b) => b.lastMod - a.lastMod);
+    } else if (sortBy === "title") {
+      return notes.sort((a, b) => {
+        const noteATitle = a.title.toUpperCase(); // ignore upper and lowercase
+        const noteBTitle = b.title.toUpperCase(); // ignore upper and lowercase
+        return noteATitle.localeCompare(noteBTitle);
+      });
+    } else {
+      return notes;
+    }
   }
 
   public export(): string {
@@ -135,8 +139,6 @@ class NotesCollection {
 
   private save() {
     localStorage.setItem('notes', JSON.stringify({ version: this.version, notes: this.notes }));
-
-    //syncNotes(this.notes);
   }
 
   private load() {
