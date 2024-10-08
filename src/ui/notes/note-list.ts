@@ -10,8 +10,8 @@ import "@material/web/list/list.js";
 
 import { Note } from "../../core/note";
 import { AppRoute } from "../../app-routing";
-import { webdavSyncContext, WebDavSync } from "../../core/webdav-sync/webdav-sync-context";
 import { NotesCollection, notesContext } from "../../core/notes-context";
+import { formatDate } from "../../core/utilities/time";
 
 
 @customElement("note-note-list")
@@ -33,9 +33,6 @@ export class NoteList extends LitElement {
       inset-inline: auto var(--_viewport-margin);
     }
   `;
-
-  @consume({ context: webdavSyncContext })
-  private _webdavSync: WebDavSync;
 
   @consume({ context: notesContext })
   private _notes: NotesCollection;
@@ -66,39 +63,14 @@ export class NoteList extends LitElement {
     <p></p>
     <md-list>
       ${notes.map(
-      (note) => html`<md-list-item href="${AppRoute.NoteWithId(note.id)}"><div slot="headline">${note.title}</div><div slot="supporting-text">${this._formatDate(note.lastMod)}</div></md-list-item>`
+      (note) => html`<md-list-item href="${AppRoute.NoteWithId(note.id)}"><div slot="headline">${note.title}</div><div slot="supporting-text">${formatDate(note.lastMod)}</div></md-list-item>`
     )}
     </md-list>
     <div class="fabs" role="group" aria-label="Floating action buttons">
       <md-fab class="fab" aria-label="Add new note" @click="${this._showNewNoteForm
       }"><md-icon aria-hidden="true" slot="icon">add</md-icon></md-fab>
-      <md-fab class="fab" aria-label="Synchronize notes" @click="${async () => await this._webdavSync.syncNotes(this._notes)
-      }"><md-icon aria-hidden="true" slot="icon">sync</md-icon></md-fab>
     </div>
     `;
-  }
-
-  private _formatDate(date: number) {
-    const rtf = new Intl.RelativeTimeFormat(navigator.language, { numeric: "auto" });
-    const second = 1000;
-    const minute = 60 * second;
-    const hour = 60 * minute;
-    const day = 24 * hour;
-    const week = 7 * day;
-
-    const elapsedTime = Date.now() - date;
-
-    if (elapsedTime < minute) {
-      return rtf.format(-Math.round(elapsedTime / second), "seconds");
-    } else if (elapsedTime < hour) {
-      return rtf.format(-Math.round(elapsedTime / minute), "minute");
-    } else if (elapsedTime < day) {
-      return rtf.format(-Math.round(elapsedTime / hour), "hour");
-    } else if (elapsedTime < week) {
-      return rtf.format(-Math.round(elapsedTime / day), "day");
-    } else {
-      return new Intl.DateTimeFormat(navigator.language).format(date);
-    }
   }
 
   private _showNewNoteForm() {

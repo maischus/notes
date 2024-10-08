@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { consume } from "@lit/context";
 
 import "@material/web/button/filled-button.js";
 import "@material/web/button/outlined-button.js";
@@ -11,8 +12,7 @@ import { MdFilterChip } from "@material/web/chips/filter-chip.js";
 import { MdOutlinedTextField } from "@material/web/textfield/outlined-text-field.js";
 
 import { Note } from "../../core/note";
-import { NotesCollection } from "../../core/notes-collection";
-import { Requestor } from "../../mixins/dependency-injection";
+import { NotesCollection, notesContext } from "../../core/notes-context";
 
 interface Tag {
   name: string;
@@ -20,7 +20,7 @@ interface Tag {
 }
 
 @customElement("note-edit-view")
-export class NoteEditView extends Requestor(LitElement) {
+export class NoteEditView extends LitElement {
   static override styles = css`
     :host {
     }
@@ -35,11 +35,11 @@ export class NoteEditView extends Requestor(LitElement) {
   @state()
   tags: Tag[] = [];
 
+  @consume({ context: notesContext })
   _notes: NotesCollection;
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this._notes = this.requestInstance("notes");
     this.tags = this._notes.getTags().map(tag => <Tag>{ name: tag, selected: false });
   }
 

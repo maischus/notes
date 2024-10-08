@@ -9,7 +9,6 @@ import '@material/web/labs/navigationbar/navigation-bar.js';
 import "@material/web/labs/navigationdrawer/navigation-drawer-modal.js";
 import '@material/web/labs/navigationtab/navigation-tab.js';
 
-import { Provider } from "./mixins/dependency-injection";
 import "./ui/notes/note-edit-view";
 import "./ui/notes/note-list";
 import "./ui/notes/note-view";
@@ -24,7 +23,7 @@ if (!globalThis.URLPattern) {
 }
 
 @customElement("notes-app")
-export class NotesApp extends Provider(LitElement) {
+export class NotesApp extends LitElement {
   static override styles = css`
     :host > header {
       z-index: 2;
@@ -55,11 +54,6 @@ export class NotesApp extends Provider(LitElement) {
 
   private _router = new Router(this, routeConfig);
 
-  public constructor() {
-    super();
-    this.provideInstance("notes", this.notes);
-  }
-
   public override connectedCallback(): void {
     super.connectedCallback();
   }
@@ -72,12 +66,10 @@ export class NotesApp extends Provider(LitElement) {
           <span>Notes</span>
         </div>
         <md-navigation-drawer-modal>
-          <div>
-            <a href="${AppRoute.Home}">Home</a>
+          <div @click="${this._toggleNavigation}">
+            <md-icon-button href="${AppRoute.Home}" aria-label="Home"><md-icon aria-hidden="true">home</md-icon></md-icon-button>
+            <md-icon-button href="${AppRoute.AppSettings}" aria-label="Settings"><md-icon aria-hidden="true">settings</md-icon></md-icon-button>
             <note-tag-list></note-tag-list>
-            <div>
-              <a href="${AppRoute.WebdavSettings}">Settings</a>
-            </div>
           </div>
         </md-navigation-drawer-modal>
       </header>

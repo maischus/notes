@@ -1,9 +1,15 @@
 import { RouteConfig } from "@lit-labs/router";
 import { html } from "lit";
+
+import "@material/web/button/filled-button.js";
+import "@material/web/button/outlined-button.js";
+
 import "./ui/webdav-settings";
+import "./ui/app-settings";
 
 export class AppRoute {
   static Home = "/";
+  static AppSettings = "/settings";
   static WebdavSettings = "/settings/webdav";
   static NewNote = "/notes/new";
   static Tags = "/tags";
@@ -15,7 +21,8 @@ export class AppRoute {
 }
 
 export const routeConfig: RouteConfig[] = [
-  { path: AppRoute.Home, render: () => html`<h1>Welcome</h1><a href="${AppRoute.NewNote}">New note</a> <a href="${AppRoute.Tags}">Tags</a>` },
+  { path: AppRoute.Home, render: () => html`<h1>My Notes</h1><md-filled-button href="${AppRoute.NewNote}">Create new note</md-filled-button> <md-outlined-button href="${AppRoute.Tags}">Show all tags</md-outlined-button>` },
+  { path: AppRoute.AppSettings, render: () => html`<app-settings></app-setttings>` },
   { path: AppRoute.WebdavSettings, render: () => html`<webdav-settings></webdav-setttings>` },
   { path: AppRoute.Tags, render: () => html`<note-tag-list></note-tag-list>` },
   { path: AppRoute.TagsAll, render: () => html`<note-note-list></note-note-list>` },
