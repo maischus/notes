@@ -12,6 +12,7 @@ import "@material/web/menu/menu.js";
 
 import { AppRoute } from "../../app-routing";
 import { NotesCollection, notesContext } from "../../core/notes-context";
+import { moreVertIcon } from "../icons";
 
 @customElement("note-view")
 export class NoteView extends LitElement {
@@ -42,7 +43,7 @@ export class NoteView extends LitElement {
         ${note.title}
         <span style="position: relative"
           ><md-icon-button @click="${this.showMenu}" id="edit-button"
-            ><md-icon>more_vert</md-icon></md-icon-button
+            >${moreVertIcon}</md-icon-button
           >
           <md-menu anchor="edit-button">
             <md-menu-item href="${AppRoute.EditNoteWithId(note.id)}"

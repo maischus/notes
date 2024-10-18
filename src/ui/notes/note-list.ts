@@ -12,6 +12,7 @@ import { Note } from "../../core/note";
 import { AppRoute } from "../../app-routing";
 import { NotesCollection, notesContext } from "../../core/notes-context";
 import { formatDate } from "../../core/utilities/time";
+import { addIcon } from "../icons";
 
 
 @customElement("note-note-list")
@@ -68,7 +69,7 @@ export class NoteList extends LitElement {
     </md-list>
     <div class="fabs" role="group" aria-label="Floating action buttons">
       <md-fab class="fab" aria-label="Add new note" @click="${this._showNewNoteForm
-      }"><md-icon aria-hidden="true" slot="icon">add</md-icon></md-fab>
+      }">${addIcon}</md-fab>
     </div>
     `;
   }
