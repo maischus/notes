@@ -129,6 +129,14 @@ class NotesCollection {
     }
   }
 
+  public search(keywords: string[]): Note[] {
+    return this.notes.filter(note => {
+      return keywords.every(keyword => {
+        return note.title.toLowerCase().indexOf(keyword.toLowerCase()) >= 0 || note.content.toLowerCase().indexOf(keyword.toLowerCase()) >= 0;
+      });
+    });
+  }
+
   public export(): string {
     return JSON.stringify(this);
   }

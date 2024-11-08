@@ -4,12 +4,14 @@ import { html } from "lit";
 import "./ui/webdav-settings";
 import "./ui/app-settings";
 import "./ui/home";
+import "./ui/notes/note-search";
 
 export class AppRoute {
   static Home = "/";
   static AppSettings = "/settings";
   static WebdavSettings = "/settings/webdav";
   static NewNote = "/notes/new";
+  static SearchNote = "/notes/search";
   static Tags = "/tags";
   static TagsAll = "/tags/all";
   static TagsUntagged = "/tags/untagged";
@@ -35,6 +37,10 @@ export const routeConfig: RouteConfig[] = [
   {
     path: AppRoute.NewNote,
     render: () => html`<note-edit-view></note-edit-view>`,
+  },
+  {
+    path: AppRoute.SearchNote,
+    render: () => html`<note-search></note-search>`,
   },
   {
     path: AppRoute.NoteWithId(":id"),

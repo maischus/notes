@@ -1,8 +1,8 @@
 import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import "@material/web/button/filled-button.js";
-import "@material/web/button/outlined-button.js";
+import "@material/web/button/filled-button";
+import "@material/web/button/outlined-button";
 
 import { AppRoute } from "../app-routing";
 

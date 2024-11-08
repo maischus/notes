@@ -1,31 +1,37 @@
+@import "open-props/style";
+
 :root {
   /*https://m3.material.io/theme-builder#/custom : #ff5722*/
-  --md-sys-color-primary: #ff922b;
-  --md-sys-color-on-primary: #f8f9fa;
+  --md-sys-color-primary: var(--orange-5);
+  --md-sys-color-on-primary: var(--gray-0);
 
-  --md-sys-color-background: #f8f9fa;
-  --md-sys-color-on-background: #030507;
-  --md-sys-color-surface: #e9ecef;
-  --md-sys-color-on-surface: #495057;
-  --md-sys-color-on-surface-variant: #868e96;
+  --md-sys-color-background: #var(--gray-0);
+  --md-sys-color-on-background: var(--gray-12);
+  --md-sys-color-surface: var(--gray-2);
+  --md-sys-color-on-surface: var(--gray-7);
+  --md-sys-color-on-surface-variant: var(--gray-6);
 
   /* filter chips*/
-  --md-sys-color-secondary-container: #ffc078;
-
+  --md-sys-color-secondary-container: var(--orange-3);
+  /* menu background */
+  --md-sys-color-surface-container: var(--red-3);
+  /* dialog background */
+  --md-sys-color-surface-container-high: var(--green-3);
   /*--md-sys-color-primary-container: #ffdbd1;
   --md-sys-color-on-primary-container: #3b0900;*/
 
   /*--md-ref-typeface-plain: "Comic Sans MS", "Comic Sans", cursive;*/
   --md-ref-typeface-plain: system-ui, -apple-system, sans-serif;
+  --md-ref-typeface-brand: var(--md-ref-typeface-plain);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --md-sys-color-background: #212529;
-    --md-sys-color-on-background: #f8f9fa;
-    --md-sys-color-surface: #343a40;
-    --md-sys-color-on-surface: #ced4da;
-    --md-sys-color-on-surface-variant: #868e96;
+    --md-sys-color-background: var(--gray-9);
+    --md-sys-color-on-background: var(--gray-0);
+    --md-sys-color-surface: var(--gray-8);
+    --md-sys-color-on-surface: var(--gray-4);
+    --md-sys-color-on-surface-variant: var(--gray-6);
   }
 }
 
