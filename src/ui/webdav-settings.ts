@@ -14,15 +14,15 @@ import { WebDavSync, webdavSyncContext } from "../core/webdav-sync/webdav-sync-c
 export class WebdavSettings extends LitElement {
 
   @consume({ context: webdavSyncContext })
-  private webdavSync: WebDavSync;
+  private webdavSync: WebDavSync | null;
 
   override render() {
     return html`
       <h2>WebDAV settings</h2>
       <form slot="content" id="form-id" method="dialog">
-          <md-outlined-text-field id="url" label="WebDAV URL" value="${this.webdavSync.settings.url}"></md-outlined-text-field>
-          <md-outlined-text-field id="user" label="User" value="${this.webdavSync.settings.user}"></md-outlined-text-field>
-          <md-outlined-text-field id="password" label="Password" value="${this.webdavSync.settings.password}" type="password"></md-outlined-text-field>
+          <md-outlined-text-field id="url" label="WebDAV URL" value="${this.webdavSync?.settings?.url}"></md-outlined-text-field>
+          <md-outlined-text-field id="user" label="User" value="${this.webdavSync?.settings?.user}"></md-outlined-text-field>
+          <md-outlined-text-field id="password" label="Password" value="${this.webdavSync?.settings?.password}" type="password"></md-outlined-text-field>
       </form>
       <div slot="actions">
         <md-outlined-button @click="${() => history.back()}">Cancel</md-outlined-button>

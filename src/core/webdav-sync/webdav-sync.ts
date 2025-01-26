@@ -13,7 +13,7 @@ type WebDavSettings = v.InferInput<typeof WebDavSettingsSchema>;
 
 export class WebDavSync {
   private _client?: WebDAVClient = null;
-  settings: WebDavSettings;
+  settings: WebDavSettings | null;
   private readonly _storageKeySettings = "webdav-settings";
   private readonly _storageKeyLastSyncDate = "last-sync";
 

@@ -69,7 +69,7 @@ export class NotesApp extends LitElement {
         <md-navigation-drawer-modal>
           <div @click="${this._toggleNavigation}">
             <md-icon-button href="${AppRoute.Home}" aria-label="Home">${homeIcon}</md-icon-button>
-            <md-icon-button href="${AppRoute.SearchNote}" aria-label="Settings">${searchIcon}</md-icon-button>
+            <md-icon-button href="${AppRoute.SearchNote}" aria-label="Settings">${searchIcon()}</md-icon-button>
             <md-icon-button href="${AppRoute.AppSettings}" aria-label="Settings">${settingsIcon}</md-icon-button>
             <note-tag-list></note-tag-list>
           </div>
