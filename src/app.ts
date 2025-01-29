@@ -16,7 +16,7 @@ import "./ui/notes/tag-list";
 import { AppRoute, routeConfig } from "./app-routing";
 import { NotesCollection, notesContext } from "./core/notes-context";
 import { WebDavSync, webdavSyncContext } from "./core/webdav-sync/webdav-sync-context";
-import { homeIcon, menuIcon, searchIcon, settingsIcon } from "./ui/icons";
+import { homeIcon, menuIcon, settingsIcon } from "./ui/icons";
 
 // @ts-ignore: Property 'UrlPattern' does not exist
 if (!globalThis.URLPattern) {
@@ -69,7 +69,6 @@ export class NotesApp extends LitElement {
         <md-navigation-drawer-modal>
           <div @click="${this._toggleNavigation}">
             <md-icon-button href="${AppRoute.Home}" aria-label="Home">${homeIcon}</md-icon-button>
-            <md-icon-button href="${AppRoute.SearchNote}" aria-label="Settings">${searchIcon()}</md-icon-button>
             <md-icon-button href="${AppRoute.AppSettings}" aria-label="Settings">${settingsIcon}</md-icon-button>
             <note-tag-list></note-tag-list>
           </div>

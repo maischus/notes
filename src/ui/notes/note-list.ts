@@ -12,7 +12,8 @@ import { Note } from "../../core/note";
 import { AppRoute } from "../../app-routing";
 import { NotesCollection, notesContext } from "../../core/notes-context";
 import { formatDate } from "../../core/utilities/time";
-import { addIcon } from "../icons";
+import { addIcon, searchIcon } from "../icons";
+import { SortCriterion, sortCriterionToString } from "../../core/notes-collection";
 
 
 @customElement("note-note-list")
@@ -39,7 +40,10 @@ export class NoteList extends LitElement {
   private _notes: NotesCollection;
 
   @state()
-  private _sortBy: "title" | "date" = "title";
+  private _sortBy: SortCriterion = SortCriterion.Title;
+
+  @state()
+  private _search = "";
 
   @property()
   tag = "";
@@ -47,21 +51,25 @@ export class NoteList extends LitElement {
   override render() {
     const tagPrefix = "tag-";
     let displayTag = "";
-    let notes: Note[] = [];
+    let searchTag = null;
+
     if (this.tag === "") {
       displayTag = "All";
-      notes = this._notes.getNotes(this._sortBy);
+      searchTag = null;
     } else if (this.tag === "untagged") {
       displayTag = "Untagged";
-      notes = this._notes.getNotes(this._sortBy, "");
+      searchTag = "";
     } else if (this.tag.startsWith(tagPrefix)) {
       displayTag = decodeURI(this.tag.slice(tagPrefix.length));
-      notes = this._notes.getNotes(this._sortBy, displayTag);
+      searchTag = displayTag;
     }
+    const notes = this._notes.getNotes().filterByTag(searchTag).search(this._search).sortBy(this._sortBy);
 
     return html`
-    <h2>${displayTag} <md-outlined-button @click="${() => this._sortBy = (this._sortBy === "date") ? "title" : "date"}">Sorted by ${this._sortBy}</md-outlined-button></h2>
-    <p></p>
+    <h2>${displayTag} <md-outlined-button @click="${() => this._sortBy = (this._sortBy === SortCriterion.Date) ? SortCriterion.Title : SortCriterion.Date}">Sorted by ${sortCriterionToString(this._sortBy)}</md-outlined-button></h2>
+    <div><md-outlined-text-field type="search" id="url" placeholder="Search" @input=${(evt: InputEvent) => this._search = (evt.target as HTMLInputElement).value}>
+        ${searchIcon("leading-icon")}
+      </md-outlined-text-field></div>
     <md-list>
       ${notes.map(
       (note) => html`<md-list-item href="${AppRoute.NoteWithId(note.id)}"><div slot="headline">${note.title}</div><div slot="supporting-text">${formatDate(note.lastMod)}</div></md-list-item>`

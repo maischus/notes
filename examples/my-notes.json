@@ -1,0 +1,62 @@
+[
+    {
+        "id": "01fbee68-a0df-4c0f-a7e2-8454563d53e3",
+        "title": "Clean-up house",
+        "content": "* Kitchen\n* Bathroom",
+        "tags": [
+            "Markdown",
+            "ToDo"
+        ],
+        "lastMod": 1737985144715,
+        "fileLastMod": null
+    },
+    {
+        "id": "54f02a5d-e3d1-4f01-a4a1-064bc23f2d1d",
+        "title": "Fix bike",
+        "content": "",
+        "tags": [
+            "ToDo"
+        ],
+        "lastMod": 1737985161030,
+        "fileLastMod": null
+    },
+    {
+        "id": "fe0fd989-df8f-4b53-8326-b504842dbc8e",
+        "title": "Mow lawn",
+        "content": "Only on Saturdays",
+        "tags": [
+            "ToDo"
+        ],
+        "lastMod": 1737985183216,
+        "fileLastMod": null
+    },
+    {
+        "id": "9ad54def-9ea7-4b98-ad0b-74a16dc5c9fc",
+        "title": "Call my mother",
+        "content": "Topics to talk about\n\n1. Her health\n2. My marriage\n3. This cool [tool](https://notes.olkus.com)",
+        "tags": [
+            "Markdown",
+            "ToDo"
+        ],
+        "lastMod": 1737985271432,
+        "fileLastMod": null
+    },
+    {
+        "id": "5f27ec23-bda0-42b0-9d22-459bc3640cc6",
+        "title": "Good movies",
+        "content": "* Ocean's Eleven",
+        "tags": [
+            "Markdown"
+        ],
+        "lastMod": 1737985369038,
+        "fileLastMod": null
+    },
+    {
+        "id": "57655dba-edf0-4eb2-9d78-80dde5110cf5",
+        "title": "Message to a friend",
+        "content": "My dear friend Luke,\n\nIt has been a long time since I wrote to you, but I am glad to have the chance now.\n\nBest regards,\nJohn",
+        "tags": [],
+        "lastMod": 1737985444593,
+        "fileLastMod": null
+    }
+]

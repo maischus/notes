@@ -1,12 +1,69 @@
 import { Note } from "./note";
 import { v4 } from "uuid";
 
-class NotesCollection {
-  private notes: Note[];
+export enum SortCriterion {
+  Unsorted,
+  Date,
+  Title
+}
+
+export function sortCriterionToString(criterion: SortCriterion) {
+  switch (criterion) {
+    case SortCriterion.Unsorted: return "Unsorted";
+    case SortCriterion.Date: return "Date";
+    case SortCriterion.Title: return "Title";
+  }
+}
+
+export class NoteArray extends Array<Note> {
+
+  public search(search: string): NoteArray {
+    if (search.length < 3) {
+      return this;
+    }
+
+    const keywords = search.split(" ");
+    return new NoteArray(...this.filter(note => {
+      return keywords.every(keyword => {
+        return note.title.toLowerCase().indexOf(keyword.toLowerCase()) >= 0 || note.content.toLowerCase().indexOf(keyword.toLowerCase()) >= 0;
+      });
+    }));
+  }
+
+  public sortBy(criterion: SortCriterion = SortCriterion.Unsorted): NoteArray {
+    switch (criterion) {
+      case SortCriterion.Date:
+        return this.sort((a, b) => b.lastMod - a.lastMod);
+      case SortCriterion.Title:
+        return this.sort((a, b) => {
+          const noteATitle = a.title.toUpperCase(); // ignore upper and lowercase
+          const noteBTitle = b.title.toUpperCase(); // ignore upper and lowercase
+          return noteATitle.localeCompare(noteBTitle);
+        });
+      default:
+        return this;
+    }
+  }
+
+  public filterByTag(tag: string | null = null): NoteArray {
+    if (tag !== null) {
+      if (tag === "") {
+        return new NoteArray(...this.filter((note) => note.tags.length == 0));
+      } else {
+        return new NoteArray(...this.filter((note) => note.tags.includes(tag)));
+      }
+    }
+
+    return this;
+  }
+}
+
+export class NotesCollection {
+  private notes: NoteArray;
   private version = "1.0.0";
 
   public constructor() {
-    this.notes = [];
+    this.notes = new NoteArray();
     this.load();
   }
 
@@ -105,36 +162,8 @@ class NotesCollection {
     return this.notes.find((note) => note.id === id);
   }
 
-  public getNotes(sortBy: "title" | "date" | "" = "", tag: null | string = null) {
-    let notes = Array.from(this.notes);
-    // tag
-    if (tag !== null) {
-      if (tag === "") {
-        notes = notes.filter((note) => note.tags.length == 0);
-      } else {
-        notes = notes.filter((note) => note.tags.includes(tag));
-      }
-    }
-
-    if (sortBy === "date") {
-      return notes.sort((a, b) => b.lastMod - a.lastMod);
-    } else if (sortBy === "title") {
-      return notes.sort((a, b) => {
-        const noteATitle = a.title.toUpperCase(); // ignore upper and lowercase
-        const noteBTitle = b.title.toUpperCase(); // ignore upper and lowercase
-        return noteATitle.localeCompare(noteBTitle);
-      });
-    } else {
-      return notes;
-    }
-  }
-
-  public search(keywords: string[]): Note[] {
-    return this.notes.filter(note => {
-      return keywords.every(keyword => {
-        return note.title.toLowerCase().indexOf(keyword.toLowerCase()) >= 0 || note.content.toLowerCase().indexOf(keyword.toLowerCase()) >= 0;
-      });
-    });
+  public getNotes(): NoteArray {
+    return new NoteArray(...this.notes);
   }
 
   public export(): string {
@@ -157,5 +186,3 @@ class NotesCollection {
     this.notes = notes.notes;
   }
 }
-
-export { NotesCollection };
